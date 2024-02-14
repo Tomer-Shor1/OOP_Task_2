@@ -1,37 +1,37 @@
-from user import User
 
 
-class Post:
-    def __init__(self, author, post_type: str, body: str = None, image_url=None, price: int = None, location: str = None, is_available: bool = None):
-        if post_type != "Text" or post_type != "Image" or post_type != "Sale":
-            raise ValueError("invalid post type")
-        self.type = post_type
+class Post():
+    def __init__(self, author):
+        self.author = author
+        self.likes = []
+        self.comments = []
+
+    def like(self, liker):
+        self.likes.append(liker)
+        notification = (liker.username + " liked your post")
+        self.author.notifications.append(notification)
+        print(f"notification to {self.author.username}:" + notification)
+    
+    def comment(self, commenter, body: str):
+        notification = (commenter.username + " commented your post")
+        self.author.notifications.append(notification)
+        self.comments.append(body)
+        print(f"notofication to {self.author.username}: " + notification + ":" + body)
+    
+    def print(self):
+        pass 
+
+
+
+class SalePost(Post):
+    def __init__(self, author, body, price, location):
         self.body = body
-        self.image_url = image_url
         self.author = author
         self.location = location
         self.likes = []
         self.comments = []
         self.price = price
-        self.is_available = is_available
-
-    def like(self, liker: User):
-        self.likes.append(liker)
-        notification = (liker.username + " has liked your post")
-        print(notification)
-        self.author.notifications.append(notification)
-
-    def unlike(self, liker: User):
-        self.likes.remove(liker)
-        notification = (liker.username + "unliked your post")
-        print(notification)
-        self.author.notifications.append(notification)
-
-    def comment(self, commenter: User, body: str):
-        notification = (commenter.username + " has commented your post")
-        print(notification)
-        self.author.notifications.append(notification)
-        self.comments.append(body)
+        self.is_available = True
 
     def print(self):
         print("The author is " + self.author.type.username)
@@ -50,7 +50,47 @@ class Post:
             print(notification)
             self.author.notifications.append(notification)
 
+    def sold(self):
+        self.is_available = False
 
 
+
+class TextPost(Post):
+    def __init__(self, author, body):
+        self.body = body
+        self.author = author
+        self.likes = []
+        self.comments = []
+
+    def print(self):
+        print(self.body)
+
+
+
+
+class ImagePost(Post):
+    def __init__(self, author, image_url):
+        self.author = author
+        self.image_url = image_url
+        self.likes = []
+        self.comments = []
+
+    def dispaly(self):
+        pass
+
+        
+
+
+
+class PostFactory:
+    def createPost(author, post_type, *info):
+        if post_type == "Text":
+            return TextPost(author, *info)
+        if post_type == "Image":
+            return ImagePost(author, *info)
+        if post_type == "Sale":
+            return SalePost(author, *info)
+        else:
+            raise Exception("Invalid post type")
 
 
