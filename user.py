@@ -74,10 +74,10 @@ class User(sender, reciever):
         return PostFactory.createPost(self, type, *info)
         
 
-    def print(self):
-        print("User's name is: " + self.username)
-        print(self.username + "has" + self.followers + "followers")
+    def __str__(self):
+        return f"User's name is: {self.username} \n{self.username} has {len(self.followers)} followers"
 
+        
     def print_notifications(self):
         for notification in self.notifications:
             print(notification)
