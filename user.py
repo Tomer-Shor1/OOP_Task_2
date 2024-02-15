@@ -30,15 +30,6 @@ class User(sender, reciever):
         self.likes = []
         self.notifications = []
 
-    def login_user(self):
-     username = input("Enter your username")
-     password = input("enter your password")
-     if self.username == username and self.password == password:
-         print("Login")
-         self.is_connected = True
-     else:
-         print("Wrong username or password")
-
     def update(self, notification):
         self.notifications.append(notification)
 
@@ -68,7 +59,7 @@ class User(sender, reciever):
         else:
             self.following.remove(other_user)
             other_user.followers.remove(self)
-            print(self.username + "unfollowed" + other_user.username)
+            print(self.username + " unfollowed " + other_user.username)
 
     def like(self, post):
         post.like(post, self)
@@ -80,8 +71,8 @@ class User(sender, reciever):
     def publish_post(self, type, *info):
         notification = (self.username + "has uploaded a new post")
         self.notify(notification)
-        post = PostFactory.createPost(self.username, type, *info)
-        return post
+        return PostFactory.createPost(self, type, *info)
+        
 
     def print(self):
         print("User's name is: " + self.username)

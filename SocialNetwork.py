@@ -25,5 +25,30 @@ class SocialNetwork:
         self.users_list.append(u)
         self.connected_users += 1
         return u
+    
+    def log_out(self, username):
+        for user in self.users_list:
+            if user.username == username:
+                _user = user
+                _user.is_connected = False
+                print(f"{_user.username} disconnected")
+                return
+        raise Exception("user not found")
+    
+    def log_in(self, username, password):
+     for user in self.users_list:
+         if user.username == username:
+             _user = user
+             if _user.username == username and _user.password == password:
+               print(f"{_user.username} connected")
+               self.is_connected = True
+               return
+             else:
+               print("Wrong username or password")
+               return
+     raise Exception("user not found")
+        
+
+
 
     

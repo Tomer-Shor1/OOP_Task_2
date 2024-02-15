@@ -10,13 +10,13 @@ class Post():
         self.likes.append(liker)
         notification = (liker.username + " liked your post")
         self.author.notifications.append(notification)
-        print(f"notification to {self.author.username}:" + notification)
+        print(f"notification to {self.author.username}: " + notification)
     
     def comment(self, commenter, body: str):
         notification = (commenter.username + " commented your post")
         self.author.notifications.append(notification)
         self.comments.append(body)
-        print(f"notofication to {self.author.username}: " + notification + ":" + body)
+        print(f"notofication to {self.author.username}: " + notification + ": " + body)
     
     def print(self):
         pass 
@@ -27,31 +27,31 @@ class SalePost(Post):
     def __init__(self, author, body, price, location):
         self.body = body
         self.author = author
+        self.price = price
         self.location = location
         self.likes = []
         self.comments = []
-        self.price = price
         self.is_available = True
+        print(f"{self.author.username} posted a product for sale! \nFor sale! {self.body}, price: {self.price}, pickup from: {self.location}")
 
-    def print(self):
-        print("The author is " + self.author.type.username)
-        if self.type == "Text" or self.type == "Sale":
-            print("The content of the post is:" + self.body)
-        print("The post has:"+len(self.likes)+"likes")
-        if self.type == "Sale":
-            print("The price of the item is:" + str(self.price))
+
+    def __str__(self):
+        if self.is_available == True:
+          return f"{self.author.username} posted a product for sale! \nFor sale! {self.body}, price: {self.price}, pickup from {self.location}"
+        return f"{self.author.username} posted a product for sale! \nSold! {self.body}, price: {self.price}, pickup from {self.location}" 
+
 
     def discount(self, discount, password):
-        if self.type != "Sale":
-            raise ValueError("You cant discount an unexciting item")
-        else:
             self.price -= discount
-            notification = ("Discount on" + self.author.username + "'s product! the new price is" + self.price)
+            notification = (f"Discount on {self.author.username}'s product! the new price is {self.price}")
             print(notification)
             self.author.notifications.append(notification)
 
-    def sold(self):
+    def sold(self, password):
+        if self.author.password != password:
+            raise Exception("Wrong password")
         self.is_available = False
+        print(f"{self.author.username}'s product is sold")
 
 
 
@@ -75,13 +75,13 @@ class ImagePost(Post):
         self.likes = []
         self.comments = []
 
-    def dispaly(self):
+    def display(self):
         pass
 
         
 
 
-
+# post factory class
 class PostFactory:
     def createPost(author, post_type, *info):
         if post_type == "Text":
