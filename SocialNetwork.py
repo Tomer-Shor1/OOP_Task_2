@@ -47,6 +47,17 @@ class SocialNetwork:
                print("Wrong username or password")
                return
      raise Exception("user not found")
+    
+
+    def __str__(self):
+       ans = f"{self.name} social network: \n"
+       for user in self.users_list: 
+          user_info = str(user)
+          ans += user_info + "\n"
+       return ans 
+          
+
+
         
 
 
