@@ -1,4 +1,5 @@
-
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 class Post():
     def __init__(self, author):
@@ -32,18 +33,18 @@ class SalePost(Post):
         self.likes = []
         self.comments = []
         self.is_available = True
-        print(f"{self.author.username} posted a product for sale! \nFor sale! {self.body}, price: {self.price}, pickup from: {self.location}")
+        print(f"{self.author.username} posted a product for sale! \nFor sale! {self.body}, price: {self.price}, pickup from: {self.location}\n")
 
 
     def __str__(self):
         if self.is_available == True:
-          return f"{self.author.username} posted a product for sale! \nFor sale! {self.body}, price: {self.price}, pickup from {self.location}"
-        return f"{self.author.username} posted a product for sale! \nSold! {self.body}, price: {self.price}, pickup from {self.location}" 
+          return f"{self.author.username} posted a product for sale! \nFor sale! {self.body}, price: {self.price}, pickup from {self.location}\n"
+        return f"{self.author.username} posted a product for sale! \nSold! {self.body}, price: {self.price}, pickup from {self.location}\n" 
 
 
     def discount(self, discount, password):
             self.price -= discount
-            notification = (f"Discount on {self.author.username}'s product! the new price is {self.price}")
+            notification = (f"Discount on {self.author.username}'s product! the new price is {self.price}\n")
             print(notification)
             self.author.notifications.append(notification)
 
@@ -51,7 +52,7 @@ class SalePost(Post):
         if self.author.password != password:
             raise Exception("Wrong password")
         self.is_available = False
-        print(f"{self.author.username}'s product is sold")
+        print(f"{self.author.username}'s product is sold\n")
 
 
 
@@ -61,9 +62,10 @@ class TextPost(Post):
         self.author = author
         self.likes = []
         self.comments = []
+        print(f"{self.author.username} published a post: \n{self.body}\n")
 
-    def print(self):
-        print(self.body)
+    def __str__(self):
+        return f"{self.author.username} pulished a post:\n{self.body}\n"
 
 
 
@@ -74,12 +76,25 @@ class ImagePost(Post):
         self.image_url = image_url
         self.likes = []
         self.comments = []
+        print(f"{self.author.username} posted a picture\n")
 
     def display(self):
-        pass
+        print("shows picture")
+        img = plt.imread(self.image_url)
+        plt.axis('off')
+        plt.imshow(img)
+        plt.show()
+        plt.show(block=False)
+        display_time = 2
+        plt.pause(display_time)
+        plt.close()
 
+
+    def __str__(self):
+        return f"{self.author.username} posted a picture\n"
         
 
+        
 
 # post factory class
 class PostFactory:
