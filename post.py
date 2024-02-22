@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
+
+#father class for posts
 class Post():
     def __init__(self, author):
         self.author = author
@@ -83,9 +85,9 @@ class ImagePost(Post):
         img = plt.imread(self.image_url)
         plt.axis('off')
         plt.imshow(img)
-        plt.show()
         plt.show(block=False)
-        display_time = 2
+        
+        display_time = 1  # Display time in seconds
         plt.pause(display_time)
         plt.close()
 

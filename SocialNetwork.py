@@ -2,19 +2,24 @@ from user import User
 
 
 class SocialNetwork:
-    __instance = None
 
-    # def __new__(cls, body):
-    #     if cls.__instancecheck__ is None:
-    #         cls.__instance = super().__new__(cls)
-    #     return cls.__instance
+    #singleton implementation
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.__initialized = False
+        return cls._instance
 
     def __init__(self, name):
-        self.name = name
-        self.users_list = []
-        self.posts_list = []
-        self.connected_users = 0
-        print(f"The social network {self.name} was created!")
+        if not self.__initialized:
+            self.name = name
+            self.users_list = []
+            self.posts_list = []
+            self.connected_users = 0
+            print(f"The social network {self.name} was created!")
+            self.__initialized = True
 
     def sign_up(self, username, password: str):
         if username in self.users_list: #initial checks
@@ -27,7 +32,7 @@ class SocialNetwork:
         return u
     
     def log_out(self, username):
-        for user in self.users_list:
+        for user in self.users_list:  #check if the user exists
             if user.username == username:
                 _user = user
                 _user.is_connected = False
@@ -36,7 +41,7 @@ class SocialNetwork:
         raise Exception("user not found")
     
     def log_in(self, username, password):
-     for user in self.users_list:
+     for user in self.users_list:    #check if the user exists
          if user.username == username:
              _user = user
              if _user.username == username and _user.password == password:

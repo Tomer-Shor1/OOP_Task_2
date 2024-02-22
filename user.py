@@ -2,6 +2,10 @@ from abc import ABC, abstractmethod
 from post import *
 from post import PostFactory
 
+# */
+#     abserver usage
+# */
+#sender abstract class
 class sender(ABC):
 
     @abstractmethod
@@ -39,7 +43,7 @@ class User(sender, reciever):
 
     def disconnect_user(self):
         self.is_connected = False
-        #SocialNetwork.connected_users = SocialNetwork.connected_users-1
+        
 
     # follow user function
     def follow(self, other_user):
