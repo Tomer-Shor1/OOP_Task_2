@@ -45,7 +45,7 @@ class SalePost(Post):
 
 
     def discount(self, discount, password):
-            self.price -= discount
+            self.price /= discount
             notification = (f"Discount on {self.author.username}'s product! the new price is {self.price}\n")
             print(notification)
             self.author.notifications.append(notification)
