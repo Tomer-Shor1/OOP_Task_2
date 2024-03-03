@@ -25,7 +25,7 @@ class SocialNetwork:
         if username in self.users_list: #initial checks
             raise ValueError("Username is already taken")
         if len(password) > 8 or len(password) < 4:
-            raise ValueError("Password must be bew 4 and 8 characters")
+            raise ValueError("Password must be between 4 and 8 characters")
         u = User(username, password)
         self.users_list.append(u)
         self.connected_users += 1
@@ -55,7 +55,7 @@ class SocialNetwork:
     
 
     def __str__(self):
-       ans = f"{self.name} social network: \n"
+       ans = f"{self.name} social network:\n"
        for user in self.users_list: 
           user_info = str(user)
           ans += user_info + "\n"

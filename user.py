@@ -69,33 +69,23 @@ class User(sender, reciever):
             other_user.followers.remove(self)
             print(self.username + " unfollowed " + other_user.username)
 
-    def like(self, post):
-        if self.is_connected == False:
-            raise Exception("cant like while user is disconnected")
-        post.like(post, self)
-
-    def comment(self, post, body: str):
-        if self.is_connected == False:
-            raise Exception("cant comment while user is disconnected")
-        post.comment(self, body)
-        self.users_comments.append(body)
-
+    # publish post
     def publish_post(self, type, *info):
         if self.is_connected == False:
             raise Exception("cant publish post while user is disconnected")
-        notification = (self.username + " has uploaded a new post")
+        notification = (self.username + " has a new post")
         self.notify(notification)
         post = PostFactory.createPost(self, type, *info)
         self.posts.append(post)
         return post
         
-
+    # print user's information
     def __str__(self):
-        return f"User name: {self.username}, number of posts: {len(self.posts)}, number of followers: {len(self.followers)}"
+        return f"User name: {self.username}, Number of posts: {len(self.posts)}, Number of followers: {len(self.followers)}"
 
-        
+    # print user's notifications    
     def print_notifications(self):
-        print(f"{self.username} notifications:\n")
+        print(f"{self.username}'s notifications:")
         for notification in self.notifications:
             print(notification)
 
